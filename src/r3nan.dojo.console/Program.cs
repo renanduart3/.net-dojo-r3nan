@@ -6,6 +6,8 @@ using r3nan.dojo.console.Paralelism;
 using r3nan.dojo.console.SOLID._2___Open_Closed_Principle;
 using r3nan.dojo.console.SOLID._3___Liskov_substitution;
 
+Console.WriteLine("teste");
+
 #region [SOLID - Session]
 // Open closed Principle
 //IDog dog1 = new MuteDog();
