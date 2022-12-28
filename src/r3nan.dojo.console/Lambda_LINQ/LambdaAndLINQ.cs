@@ -101,5 +101,62 @@ namespace r3nan.dojo.console.Lambda_LINQ
 
 		#endregion
 
+
+		#region [LINQ]
+
+		public void testLINQ()
+		{
+
+			Category c1 = new Category(1, "Tools", Tier.Mid);
+			Category c2 = new Category(2, "Paper", Tier.Low);
+			Category c3 = new Category(3, "Electronics", Tier.High);
+
+			List<Product> products = new List<Product>()
+			{
+			  new Product(1,"Computer", 3150.50M,c1),
+			  new Product(2,"Paper A4", 12.45M,c2),
+			  new Product(3,"Pen", 2,c2),
+			  new Product(4,"Hammer", 22.52M,c1),
+			  new Product(5,"Monkey Wrench",41.70M,c1),
+			  new Product(6,"TV", 2219.50M,c3),
+			  new Product(7,"Saw", 12.50M,c1),
+			  new Product(8,"Lamp", 1.50M,c3),
+			  new Product(9,"Pliers", 2.80M,c1),
+			  new Product(10,"Scissors", 4.60M,c2),
+			  new Product(11,"LED", 0.20m,c3),
+			};
+
+
+			//FilterTierAndPrice(products);
+			//FilterProductName(products);
+
+		}
+
+		void FilterProductName(List<Product> products)
+		{
+			//products that starts with P and anonymous
+			var result2 = products
+							.Where(p => p.Name.StartsWith("P"))
+							.Select(p => new { p.Name, p.Price });
+			Console.WriteLine("Products starting with P in a new object:");
+
+			foreach (var item in result2)
+			{
+				Console.WriteLine(item.Name + " - " + item.Price);
+			}
+		}
+
+		void FilterTierAndPrice(List<Product> products)
+		{
+			//all products tier 1 and price above 900
+			var result = products.Where(x => x.Price < 900 && x.Category.Layer.Equals(Tier.High));
+			foreach (var item in result)
+			{
+				Console.WriteLine($" Product: {item.Name} - Price {item.Price} - Tier : {item.Category.Name} ");
+			}
+		}
+
+		#endregion
+
 	}
 }

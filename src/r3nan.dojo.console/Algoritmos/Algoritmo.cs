@@ -1,6 +1,7 @@
 ﻿using Domain;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace r3nan.dojo.console.Algoritmos
 {
-	internal class Algoritmo
+	internal sealed class Algoritmo
 	{
 		Car[] _carsList = new Car[]
 			{
@@ -71,7 +72,7 @@ namespace r3nan.dojo.console.Algoritmos
 			Console.WriteLine("Lista ordenada:");
 			foreach (var item in _carsList)
 			{
-				Console.WriteLine($" {item.Name} - Preço: { item.Price }");
+				Console.WriteLine($" {item.Name} - Preço: {item.Price}");
 			}
 		}
 		public void InsertionSort()
@@ -80,7 +81,7 @@ namespace r3nan.dojo.console.Algoritmos
 
 			foreach (var item in _carsList)
 			{
-				Console.WriteLine($" {item.Name } - { item.Price} ");
+				Console.WriteLine($" {item.Name} - {item.Price} ");
 			}
 
 			for (int i = 1; i < _carsList.Length; i++)
@@ -113,6 +114,51 @@ namespace r3nan.dojo.console.Algoritmos
 				}
 			}
 			Console.WriteLine(nearestZero);
+		}
+		public void CallingEachEveryMonthInPeriod()
+		{
+			DateTime? startDate = DateTime.Now;
+			DateTime? endDate = DateTime.Now;
+			DateTime filtroDataInicio = startDate ?? DateTime.UtcNow.AddMonths(-6);
+			DateTime filtroDataFim = endDate ?? DateTime.UtcNow;
+			CultureInfo _cultureInfo = new CultureInfo("pt-BR");
+
+			var rangeDatas = filtroDataFim - filtroDataInicio;
+			DateTime dataFinalNova;
+			TimeSpan dataSomar = TimeSpan.FromDays(30);
+
+			while (rangeDatas.TotalSeconds > 0)
+			{
+				if (rangeDatas.Days / dataSomar.Days > 0)
+					dataFinalNova = filtroDataInicio.Add(dataSomar);
+				else
+					dataFinalNova = filtroDataFim;
+
+				filtroDataInicio = dataFinalNova;
+				rangeDatas = rangeDatas.Subtract(dataSomar);
+
+			}
+
+		}
+
+		public bool ProbabilityGenerator(int probability)
+		{
+			Random Random = new Random();
+
+			if (probability < 0 || probability > 100)
+			{
+				throw new ArgumentOutOfRangeException(nameof(probability), "Probability must be between 0 and 100.");
+			}
+
+			return Random.Next(1, 101) <= probability;
+		}
+
+		public void TestProbability(int attempts, int probability)
+		{
+			for (int i = 0; i < attempts; i++)
+			{
+				Console.WriteLine("result: " + ProbabilityGenerator(probability));
+			}
 		}
 	}
 }
